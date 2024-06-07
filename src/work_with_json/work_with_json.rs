@@ -13,6 +13,7 @@ struct Person {
 }
 
 pub async fn get_person_details() -> Result<(), Box<dyn Error>> {
+    log::info!("work with json Started");
     // Example JSON data
     let data = r#"
         {
@@ -32,5 +33,7 @@ pub async fn get_person_details() -> Result<(), Box<dyn Error>> {
     let json = serde_json::to_string(&person)?;
     println!("Serialized: {}", json);
 
+    log::info!("work with json completed");
+    
     Ok(())
 }
