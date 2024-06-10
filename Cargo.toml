@@ -9,11 +9,11 @@ edition = "2021"
 
 # common
 dotenv = "0.15"
+tokio = { version = "1", features = ["full"] }
 
 # rest_api dependencies
 
 actix-web = "4"
-tokio = { version = "1", features = ["full"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 
@@ -23,3 +23,7 @@ log = "0.4"
 log4rs = "1.2.0"
 chrono = "0.4"
 reqwest = "0.12.4"
+
+# kafka dependencies
+futures = "0.3"
+kafka = "0.10.0"
