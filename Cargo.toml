@@ -27,3 +27,6 @@ reqwest = "0.12.4"
 # kafka dependencies
 futures = "0.3"
 kafka = "0.10.0"
+
+# redis dependencies
+redis = { version = "0.25.4", features = ["aio", "tokio-comp"] }

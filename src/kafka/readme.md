@@ -1,9 +1,10 @@
-to run this
+to run this in Macos
 
 # steps:
 
-1. Install kafka
-2. create topics
+1. Install kafka (depends on your machine)
+2. write topics
+3. read topics
 
 # create texts topic
 

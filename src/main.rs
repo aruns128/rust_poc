@@ -5,7 +5,7 @@ mod logging;
 mod async_operation;
 mod work_with_json;
 mod kafka;
-
+mod redis;
 
 #[tokio::main]
 async fn main() {
@@ -17,13 +17,13 @@ async fn main() {
     if args.len() < 2 {
         log::info!("Program started without arguments");
         println!("Usage: cargo run [action]");
-        println!("Example: cargo run postgres, the available actions are rest_api, async_operation, json_example, kafka_producer, kafka_consumer");
+        println!("Example: cargo run redis, the available actions are rest_api, async_operation, json_example, kafka_producer, kafka_consumer, redis");
         return;
     }
 
     match args[1].as_str() {
         "rest_api" => {
-            log::info!("Starting REST CRUD operation");
+            log::info!("Starting {} operation", args[1].as_str());
             if let Err(e) = rest_api::rest_crud().await {
                 log::error!("REST CRUD Operation failed to start: {}", e);
             }
@@ -41,7 +41,7 @@ async fn main() {
                 log::error!("JSON Example with rust failed to start: {}", e);
             }
         },
-        "kafka"=>{
+        "kafka" => {
             let kafka_url = match env::var("KAFKA_URL") {
                 Ok(url) => url,
                 Err(_) => {
@@ -51,10 +51,16 @@ async fn main() {
             };
 
             log::info!("Starting Kafka service");
-            if let Err(e) =kafka::handle_kafka(&kafka_url).await {
+            if let Err(e) = kafka::handle_kafka(&kafka_url).await {
                 log::error!("Kafka service failed to start: {}", e);
             }
-           },
-        _ => log::warn!("Unsupported type."),
+        },
+        "redis" => {
+            log::info!("Starting Redis CRUD operation");
+            if let Err(e) = redis::redis_operations::handle_redis().await {
+                log::error!("Redis CRUD Operation failed to start: {}", e);
+            }
+        },
+        _ => log::warn!("Unsupported Action type."),
     }
 }
